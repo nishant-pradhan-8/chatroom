@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+html {
+  @apply h-screen;
+}
+body,
+#root {
+  @apply h-full;
+}
+
+.MuiBox-root {
+  @apply !h-full overflow-hidden;
+}
+.MuiTypography-body1 {
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
