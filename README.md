@@ -70,3 +70,27 @@ git clone https://github.com/nishant-pradhan-8/chatroom.git
 - cp .env.example .env
 - npm run dev
 
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+
+![Login Page](../chatroom/client/public/images/login.png)
+
+---
+
+### 🔐 Registration Page
+
+![Login Page](../chatroom/client/public/images/registration.png)
+
+---
+
+### 📨 Chat Interface
+
+![Chat Interface](../chatroom/client/public/images/home.png)
+![Chat Interface](../chatroom/client/public/images/messages.png)
+---
+
+### 👥 Account Details Dialog
+
+![Register Page](../chatroom/client/public/images/dialog.png)
