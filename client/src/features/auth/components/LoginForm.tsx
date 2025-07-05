@@ -75,7 +75,7 @@ const LoginForm = () => {
         <button
           type="submit"
           disabled={processing}
-          className="bg-purple-600 text-white rounded-lg py-2 font-semibold hover:bg-purple-700 transition"
+          className="bg-purple-600 cursor-pointer text-white rounded-lg py-2 font-semibold hover:bg-purple-700 transition"
         >
           {processing ? "Logging In..." : "LogIn"}
         </button>

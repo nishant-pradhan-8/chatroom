@@ -30,9 +30,9 @@ export default function ClippedLayout() {
 
   useEffect(() => {
     if (!user) {
-     
       return;
     }
+
     socket.connect();
 
     socket.emit("new-user-online", user?._id);
@@ -41,6 +41,7 @@ export default function ClippedLayout() {
       if (!userList) {
         return;
       }
+      console.log("went");
 
       const updatedUserList: User[] = userList.map((u) => {
         if (u._id === user.userId) {
@@ -97,13 +98,13 @@ export default function ClippedLayout() {
         const res = await getProfile();
         if (res.data) {
           setUser({ ...res.data, online: true });
-        }else{
+        } else {
           navigate("/login");
         }
       }
       fetchLoggedInUser();
     }
-    if (user && !userList) {
+    if (!userList) {
       async function fetchUserList() {
         const res = await getUsers();
         if (res.data) {
@@ -112,7 +113,7 @@ export default function ClippedLayout() {
       }
       fetchUserList();
     }
-    if (user && !messageCount) {
+    if (!messageCount) {
       async function fetchUserList() {
         const res = await getMessageCount();
         if (res.data) {
@@ -121,7 +122,7 @@ export default function ClippedLayout() {
       }
       fetchUserList();
     }
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     if (user && !messageList) {

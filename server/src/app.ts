@@ -31,8 +31,9 @@ app.use(cookieParser());
 
 io.on("connection", (socket) => {
   socket.on("new-user-online", (userId) => {
+
     onlineUsers.set(userId, socket.id);
-    
+   console.log(onlineUsers)
     socket.broadcast.emit("notify-user-online", { userId });
   });
 
@@ -43,11 +44,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    
     const userId = [...onlineUsers.entries()].find(
       ([id, sId]) => sId === socket.id
     )?.[0];
     if (userId) {
       onlineUsers.delete(userId);
+      console.log(onlineUsers)
       socket.broadcast.emit("notify-user-offline", { userId });
     }
   });

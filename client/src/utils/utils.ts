@@ -1,6 +1,38 @@
 import type { Message, MessageResponse, User } from "../types/type";
 import { format } from "date-fns";
 
+// Validation functions matching server-side rules
+export const validateEmail = (email: string): string | undefined => {
+  if (!email.trim()) {
+    return "Email is required";
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return "Must be a valid email";
+  }
+  return undefined;
+};
+
+export const validateUsername = (username: string): string | undefined => {
+  if (!username.trim()) {
+    return "Username is required";
+  }
+  if (username.length < 5 || username.length > 15) {
+    return "Username should be greater than 5 and less than 15";
+  }
+  return undefined;
+};
+
+export const validatePassword = (password: string): string | undefined => {
+  if (!password.trim()) {
+    return "Password is required";
+  }
+  if (password.length < 6) {
+    return "Password must be at least 6 characters";
+  }
+  return undefined;
+};
+
 export const formatMessageResponse = (
   messages: MessageResponse[],
   userList: User[],

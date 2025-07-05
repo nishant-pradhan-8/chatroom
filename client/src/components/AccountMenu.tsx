@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { user, setUser } = useAppContext();
+  const { user } = useAppContext();
   const navigate = useNavigate();
 
   const [profileDialogOpen, setProfileDialogOpen] = React.useState(false);
@@ -52,7 +52,8 @@ export default function AccountMenu() {
     try {
       const response = await logout();
       if (response.status === "success") {
-        setUser(null);
+      
+        location.reload();
         navigate("/login");
       } else {
         console.error("Logout failed:", response.message);

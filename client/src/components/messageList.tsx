@@ -102,7 +102,7 @@ export default function MessageList() {
       ref={chatContainerRef}
       className="flex flex-col h-full overflow-x-hidden overflow-y-auto gap-4"
     >
-      {messageList?.map((msg) => (
+      {messageList?.length===0?<div className="flex flex-col gap-2 items-center w-full"><img src="/images/message.svg"  className="w-[40rem]"/><p>No messages to show. Invite your friend and start a chat.</p></div>: messageList?.map((msg) => (
         <div key={msg.messageId}>
           <Message message={msg} />
         </div>
