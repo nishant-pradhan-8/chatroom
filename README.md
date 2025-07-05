@@ -59,14 +59,14 @@ git clone https://github.com/nishant-pradhan-8/chatroom.git
 ```
 
 ### 2. Backend Setup
-cd server
-npm install
-cp .env.example .env
-npm run dev
+- cd server
+- npm install
+- cp .env.example .env
+- npm run dev
 
 ### 3. Frontend Setup
-cd client
-npm install
-cp .env.example .env
-npm run dev
+- cd client
+- npm install
+- cp .env.example .env
+- npm run dev
 
