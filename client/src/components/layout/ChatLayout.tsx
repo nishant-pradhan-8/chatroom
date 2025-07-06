@@ -70,6 +70,7 @@ export default function ClippedLayout() {
       });
       setUserList(updatedUserList);
     };
+
     const handleNewMessage = async (response: { message: MessageResponse }) => {
       if (!user || !userList) {
         return;
@@ -77,13 +78,11 @@ export default function ClippedLayout() {
 
       setMessageCount((prev: number) => prev + 1);
 
-      // Check if the sender exists in the current user list
-      const senderExists = userList.find(u => u._id === response.message.senderId);
+        const senderExists = userList.find(u => u._id === response.message.senderId);
       
       let currentUserList = userList;
       
-      // If sender doesn't exist, fetch updated user list
-      if (!senderExists) {
+     if (!senderExists) {
         try {
           const res = await getUsers();
           if (res.data) {
@@ -104,14 +103,12 @@ export default function ClippedLayout() {
     };
 
     const handleNewRegistration = async() =>{
-      try {
+    
         const res = await getUsers();
         if (res.data) {
           setUserList(res.data);
         }
-      } catch (error) {
-        console.error("Failed to fetch updated user list after registration:", error);
-      }
+     
     }
 
     socket.on("notify-user-online", handleNewUserOnline);
