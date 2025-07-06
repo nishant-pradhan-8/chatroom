@@ -75,22 +75,22 @@ git clone https://github.com/nishant-pradhan-8/chatroom.git
 
 ### 🔐 Login Page
 
-![Login Page](../chatroom/client/public/images/login.png)
+![Login Page](https://github.com/nishant-pradhan-8/chatroom/blob/main/login.png?raw=true)
 
 ---
 
 ### 🔐 Registration Page
 
-![Login Page](../chatroom/client/public/images/registration.png)
+![Login Page](https://github.com/nishant-pradhan-8/chatroom/blob/main/registration.png?raw=true)
 
 ---
 
 ### 📨 Chat Interface
 
-![Chat Interface](../chatroom/client/public/images/home.png)
-![Chat Interface](../chatroom/client/public/images/messages.png)
+![Chat Interface](https://github.com/nishant-pradhan-8/chatroom/blob/main/home.png?raw=true)
+![Chat Interface](https://github.com/nishant-pradhan-8/chatroom/blob/main/messages.png?raw=true)
 ---
 
 ### 👥 Account Details Dialog
 
-![Register Page](../chatroom/client/public/images/dialog.png)
+![Register Page](https://github.com/nishant-pradhan-8/chatroom/blob/main/dialog.png?raw=true)
