@@ -46,7 +46,9 @@ export async function getUserProfile(req: Request, res: Response) {
 export async function getUsers(req: Request, res: Response) {
   try {
     const userId = (req.user as jwt.JwtPayload).id;
-    const users = await User.find({_id:{$ne:userId}}).select("_id username email");
+    const users = await User.find({ _id: { $ne: userId } }).select(
+      "_id username email"
+    );
 
     const modifiedUserList = users.map((user) => ({
       ...user.toObject(),
@@ -83,7 +85,6 @@ export async function updateUserProfile(req: Request, res: Response) {
       return;
     }
 
-  
     if (!email || !username) {
       res.status(400).json({
         status: "error",
@@ -93,11 +94,11 @@ export async function updateUserProfile(req: Request, res: Response) {
       return;
     }
 
-    const existingUserWithEmail = await User.findOne({ 
-      email, 
-      _id: { $ne: userId } 
+    const existingUserWithEmail = await User.findOne({
+      email,
+      _id: { $ne: userId },
     });
-    
+
     if (existingUserWithEmail) {
       res.status(400).json({
         status: "error",
@@ -106,11 +107,11 @@ export async function updateUserProfile(req: Request, res: Response) {
       });
       return;
     }
-    const existingUserWithUsername = await User.findOne({ 
-      username, 
-      _id: { $ne: userId } 
+    const existingUserWithUsername = await User.findOne({
+      username,
+      _id: { $ne: userId },
     });
-    
+
     if (existingUserWithUsername) {
       res.status(400).json({
         status: "error",
@@ -166,7 +167,6 @@ export async function changePassword(req: Request, res: Response) {
       return;
     }
 
-   
     if (!oldPassword || !newPassword) {
       res.status(400).json({
         status: "error",
@@ -204,7 +204,6 @@ export async function changePassword(req: Request, res: Response) {
       });
       return;
     }
-
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 12);
 
@@ -263,7 +262,6 @@ export async function deleteUser(req: Request, res: Response) {
       return;
     }
 
-
     const user = await User.findById(userId).select("password");
     if (!user) {
       res.status(404).json({
@@ -284,7 +282,6 @@ export async function deleteUser(req: Request, res: Response) {
       return;
     }
 
-
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) {
       res.status(404).json({
@@ -299,8 +296,6 @@ export async function deleteUser(req: Request, res: Response) {
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
     });
-
- 
 
     res.status(200).json({
       status: "success",
@@ -318,4 +313,3 @@ export async function deleteUser(req: Request, res: Response) {
     return;
   }
 }
-

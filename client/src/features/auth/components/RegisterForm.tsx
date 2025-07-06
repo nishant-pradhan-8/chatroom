@@ -3,7 +3,7 @@ import type { Credentials } from "../../../types/type";
 import { register } from "../../../service/authService";
 import { useNavigate } from "react-router-dom";
 import { validateEmail, validateUsername, validatePassword } from "../../../utils/utils";
-
+import { useAppContext } from "../../../store/store";
 interface ValidationErrors {
   email?: string;
   username?: string;
@@ -18,7 +18,7 @@ const RegisterForm = () => {
     email: "",
     password: "",
   });
-
+  const {setNewRegistration} = useAppContext();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
@@ -65,6 +65,7 @@ const RegisterForm = () => {
         setErrorMessage(response.message || "Unable to create account.");
         return;
       }
+     setNewRegistration(true)
       navigate("/");
     } finally {
       setProcessing(false);

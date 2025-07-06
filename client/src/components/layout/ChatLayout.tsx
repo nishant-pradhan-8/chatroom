@@ -25,6 +25,8 @@ export default function ClippedLayout() {
     appendMessage,
     messageCount,
     setMessageCount,
+    newRegistration,
+    setNewRegistration
   } = useAppContext();
   const navigate = useNavigate();
 
@@ -37,12 +39,15 @@ export default function ClippedLayout() {
 
     socket.emit("new-user-online", user?._id);
 
+    if(newRegistration){
+      socket.emit('new-user-registration')
+      setNewRegistration(false)
+    }
+
     const handleNewUserOnline = (user: { userId: string }) => {
       if (!userList) {
         return;
       }
-      console.log("went");
-
       const updatedUserList: User[] = userList.map((u) => {
         if (u._id === user.userId) {
           return { ...u, online: true };
@@ -65,28 +70,59 @@ export default function ClippedLayout() {
       });
       setUserList(updatedUserList);
     };
-    const handleNewMessage = (response: { message: MessageResponse }) => {
-      if (!userList || !user) {
+    const handleNewMessage = async (response: { message: MessageResponse }) => {
+      if (!user || !userList) {
         return;
       }
 
       setMessageCount((prev: number) => prev + 1);
-      console.log("went");
+
+      // Check if the sender exists in the current user list
+      const senderExists = userList.find(u => u._id === response.message.senderId);
+      
+      let currentUserList = userList;
+      
+      // If sender doesn't exist, fetch updated user list
+      if (!senderExists) {
+        try {
+          const res = await getUsers();
+          if (res.data) {
+            currentUserList = res.data;
+            setUserList(res.data);
+          }
+        } catch (error) {
+          console.error("Failed to fetch updated user list:", error);
+        }
+      }
+ 
       const formattedMessage: Message = formatMessageResponse(
         [response.message],
-        userList,
+        currentUserList,
         user
       )[0];
       appendMessage(formattedMessage);
     };
 
+    const handleNewRegistration = async() =>{
+      try {
+        const res = await getUsers();
+        if (res.data) {
+          setUserList(res.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch updated user list after registration:", error);
+      }
+    }
+
     socket.on("notify-user-online", handleNewUserOnline);
     socket.on("notify-user-offline", handleUserOffline);
     socket.on("new-message-incomming", handleNewMessage);
+    socket.on("new-user-registration", handleNewRegistration);
     return () => {
       socket.off("notify-user-online", handleNewUserOnline);
       socket.off("notify-user-offline", handleUserOffline);
       socket.off("new-message-incomming", handleNewMessage);
+      socket.off("new-user-registration", handleNewRegistration);
 
       socket.disconnect();
     };

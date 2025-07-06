@@ -19,6 +19,8 @@ type AppContextType = {
   appendMessage: (newMessage: Message) => void;
   messageCount: number;
   setMessageCount: React.Dispatch<React.SetStateAction<number>>;
+  newRegistration:boolean;
+   setNewRegistration: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -29,6 +31,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState<number>(1);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messageCount, setMessageCount] = useState<number>(0);
+  const [newRegistration, setNewRegistration] = useState<boolean>(false)
   const appendMessage = (newMessage: Message) => {
     setMessageList((prev) => [...(prev || []), newMessage]);
     setShouldScrollToBottom(true);
@@ -50,6 +53,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
         appendMessage,
         messageCount,
         setMessageCount,
+        newRegistration, 
+        setNewRegistration
       }}
     >
       {children}

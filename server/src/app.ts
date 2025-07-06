@@ -30,12 +30,16 @@ app.use(express.json());
 app.use(cookieParser());
 
 io.on("connection", (socket) => {
-  socket.on("new-user-online", (userId) => {
+
+  socket.on("new-user-online", (userId:string) => {
 
     onlineUsers.set(userId, socket.id);
-   console.log(onlineUsers)
     socket.broadcast.emit("notify-user-online", { userId });
   });
+
+  socket.on("new-user-registration",()=>{
+    socket.broadcast.emit('new-user-registration')
+  })
 
   socket.on("new-message", async (msgObj: MessageObject) => {
     const message = await saveMessage(msgObj);

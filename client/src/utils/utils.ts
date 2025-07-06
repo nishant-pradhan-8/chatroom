@@ -1,7 +1,6 @@
 import type { Message, MessageResponse, User } from "../types/type";
 import { format } from "date-fns";
 
-// Validation functions matching server-side rules
 export const validateEmail = (email: string): string | undefined => {
   if (!email.trim()) {
     return "Email is required";
