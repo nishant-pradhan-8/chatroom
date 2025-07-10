@@ -10,13 +10,25 @@ import messageRoutes from "./routes/MessageRoutes";
 import { VerifyToken } from "./middleware/VerifyToken";
 import onlineUsers from "./OnlineUsers";
 import { MessageObject, saveMessage } from "./controllers/MessageController";
-
+import { rateLimit } from 'express-rate-limit'
 const app = express();
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000, 
+  max: 30, 
+  message: {
+    status: 429,
+    message: "Too many requests. Please wait a moment before sending more messages.",
+  },
+  standardHeaders: true, 
+  legacyHeaders: false, 
+});
+
 
 const server = createServer(app);
 
 const corsOptions: CorsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.ORIGIN,
   methods: ["GET", "POST", "PATCH", "DELETE"],
   credentials: true,
 };
@@ -28,6 +40,7 @@ const io = new Server(server, {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+
 
 io.on("connection", (socket) => {
 
@@ -59,6 +72,8 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+app.use(chatLimiter)
 
 app.use("/api/auth", authRoutes);
 
