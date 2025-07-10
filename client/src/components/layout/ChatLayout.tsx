@@ -183,7 +183,7 @@ export default function ClippedLayout() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Header />
-      <Sidebar />
+      <Sidebar variant="permanent" className="hidden md:block" />
       <MainContent />
     </Box>
   );
